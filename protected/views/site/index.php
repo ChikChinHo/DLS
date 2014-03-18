@@ -18,3 +18,10 @@ $this->pageTitle=Yii::app()->name;
 the <a href="http://www.yiiframework.com/doc/">documentation</a>.
 Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
 should you have any questions.</p>
+
+function isAdmin() { // this should say "public function", btw
+$testId = Yii::app()->user->id;
+echo $testId;
+print_r(User::model()->findByPk($testId));
+die();
+}
