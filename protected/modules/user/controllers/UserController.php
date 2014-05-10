@@ -26,8 +26,8 @@ class UserController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view'),
-				'users'=>array('admin'),
-                //'users'=>Yii::app()->getModule('user')->getAdmins(),
+				//'users'=>array('admin'),
+                'users'=>Yii::app()->getModule('user')->getAdmins(),
             ),
 			array('deny',  // deny all users
                 'users'=>array('*'),

@@ -23,16 +23,20 @@
 		<?php echo $form->labelEx($model,'Date'); ?>
 		<?php //echo $form->textField($model,'Date'); ?>
         <?php
-        $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-            'name'=>"Date",
-            'value'=>$model->Date,
-            'options'=>array(
-                'showAnim'=>'fold',
-                'dateFormat'=>'yy-mm-dd',
-                'debug'=>true,),
-            'htmlOptions'=>array(
-                'style'=>'height:20px;'
-            ),
+        $form->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'model'=>$model,
+            'attribute'=>'date',
+            'name'=>$model->date,    // This is how it works for me.
+            'value'=>$model->date,
+            'options'=>array('dateFormat'=>'yy-mm-dd',
+                'altFormat'=>'dd-mm-yy',
+                'changeMonth'=>'true',
+                'changeYear'=>'true',
+                //'yearRange'=>'1920:2010',
+                'showOn'=>'both',
+                'buttonText'=>'...'),
+            'htmlOptions'=>array('size'=>'10'
+            )
         ));
         ?>
 		<?php echo $form->error($model,'Date'); ?>

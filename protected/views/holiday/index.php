@@ -6,10 +6,12 @@ $this->breadcrumbs=array(
 	'Holidays',
 );
 
-$this->menu=array(
-	array('label'=>'Create Holiday', 'url'=>array('create')),
-	array('label'=>'Manage Holiday', 'url'=>array('admin')),
-);
+if (Yii::app()->getModule('user')->isAdmin()) {
+    $this->menu = array(
+        array('label' => 'Create Holiday', 'url' => array('create')),
+        array('label' => 'Manage Holiday', 'url' => array('admin')),
+    );
+}
 ?>
 
 <h1>Holidays</h1>

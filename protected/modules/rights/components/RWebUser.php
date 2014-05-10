@@ -22,6 +22,18 @@ class RWebUser extends CWebUser
 			$this->isSuperuser = true;
 	}
 
+    public function updateSession() {
+        $user = Yii::app()->getModule('user')->user($this->id);
+        $userAttributes = CMap::mergeArray(array(
+            'email'=>$user->email,
+            'username'=>$user->username,
+            'create_at'=>$user->create_at,
+            'lastvisit_at'=>$user->lastvisit_at,
+        ),$user->profile->getAttributes());
+        foreach ($userAttributes as $attrName=>$attrValue) {
+            $this->setState($attrName,$attrValue);
+        }
+    }
 	/**
 	* Performs access check for this user.
 	* Overloads the parent method in order to allow superusers access implicitly.
