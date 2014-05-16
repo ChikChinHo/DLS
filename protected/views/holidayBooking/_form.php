@@ -135,12 +135,11 @@ JS
     var todayDate = new Date();
     var userInputDateConverted = new Date();
     userInputDateConverted = Date.parse(userInputDate);
-    /alert(todayDate);
-    /alert(userInputDateConverted);
+    alert(todayDate);
+    alert(userInputDateConverted);
     var isLarge = todayDate < userInputDateConverted;
-    //alert(isLarge);
+    alert(isLarge);
     //if (userInputDate > todayDate) {alert('yes');};
-
     var alertMessageFull = 'Too many user requset for leave on '+userInputDate+'.  Please select another Day.';
     var alertMessageNull = 'Incorrect date format or no date was selected.  Please select a date first!';
     if (userInputDate == '' || reTest == false)
@@ -150,7 +149,7 @@ JS
     document.getElementById('HolidayBooking_status').value ='NOT ACCEPTED';}
     else if (reTest == true) {
             if (isLarge == true ) {
-                document.getElementById
+                alert(userInputDate);document.getElementById
                 ('submitButton').style.visibility = 'visible'; document.getElementById('HolidayBooking_status').value = 'ACCEPTED';
             } else {
                 document.getElementById
