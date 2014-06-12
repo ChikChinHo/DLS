@@ -1,20 +1,24 @@
 <?php
 
 /**
- * This is the model class for table "salary".
+ * This is the model class for table "department".
  *
- * The followings are the available columns in table 'salary':
- * @property string $grade
- * @property integer $value
+ * The followings are the available columns in table 'department':
+ * @property string $deptID
+ * @property string $deptName
+ * @property integer $edit
+ *
+ * The followings are the available model relations:
+ * @property Employee[] $employees
  */
-class Salary extends CActiveRecord
+class Department extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'salary';
+		return 'department';
 	}
 
 	/**
@@ -25,12 +29,13 @@ class Salary extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('grade, value', 'required'),
-			array('value', 'numerical', 'integerOnly'=>true),
-			array('grade', 'length', 'max'=>2),
+			array('deptID, deptName, edit', 'required'),
+			array('edit', 'numerical', 'integerOnly'=>true),
+			array('deptID', 'length', 'max'=>10),
+			array('deptName', 'length', 'max'=>30),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('grade, value', 'safe', 'on'=>'search'),
+			array('deptID, deptName, edit', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,6 +47,7 @@ class Salary extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'employees' => array(self::HAS_MANY, 'Employee', 'deptID'),
 		);
 	}
 
@@ -51,8 +57,9 @@ class Salary extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'grade' => 'Grade',
-			'value' => 'Value',
+			'deptID' => 'Dept',
+			'deptName' => 'Dept Name',
+			'edit' => 'Edit',
 		);
 	}
 
@@ -74,33 +81,20 @@ class Salary extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('grade',$this->grade,true);
-		$criteria->compare('value',$this->value);
+		$criteria->compare('deptID',$this->deptID,true);
+		$criteria->compare('deptName',$this->deptName,true);
+		$criteria->compare('edit',$this->edit);
 
-		/*return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,*/
-        //$criteria=new CDbCriteria;
-
-        if (Yii::app()->getModule('user')->isAdmin() == false) {
-            //$userid = Yii::app()->user->id;
-            //$criteria->addCondition("userid = $userid");
-            $testId = Yii::app()->user->id;
-            $modelAttributes = Employee::model()->findByPk($testId);
-            $grade = "'".$modelAttributes['grade']."'";
-            $criteria->addCondition("grade = $grade");
-        }
-        return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
 		));
-
-
 	}
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Salary the static model class
+	 * @return Department the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

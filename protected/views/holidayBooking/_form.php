@@ -90,6 +90,21 @@ JS
     <!--<input type="button" id="toggler" value="Toggler" onClick="action();" />
 
     <input type="button" id="togglee" value="Togglee" />-->
+    <?php Yii::app()->clientScript->registerScript('script', <<<JS
+    $("#userInputDate").change( function() {
+        //alert('alert');
+        var userInputDate = document.getElementById('userInputDate').value;
+        var todayDate = new Date();
+        var isLarge = todayDate < Date.parse(userInputDate);
+        if (isLarge == false) {
+            alert("Cannot select date from past!");
+            document.getElementById('HolidayBooking_status').value ='NOT ACCEPTED';
+            document.getElementById('submitButton').style.visibility = 'hidden';
+            }
+    });
+JS
+        , CClientScript::POS_READY);?>
+
 
     <?php
     $result= Yii::app()->db->createCommand("SELECT date, status
@@ -135,10 +150,10 @@ JS
     var todayDate = new Date();
     var userInputDateConverted = new Date();
     userInputDateConverted = Date.parse(userInputDate);
-    alert(todayDate);
-    alert(userInputDateConverted);
+    //alert(todayDate);
+    //alert(userInputDateConverted);
     var isLarge = todayDate < userInputDateConverted;
-    alert(isLarge);
+    //alert(isLarge);
     //if (userInputDate > todayDate) {alert('yes');};
     var alertMessageFull = 'Too many user requset for leave on '+userInputDate+'.  Please select another Day.';
     var alertMessageNull = 'Incorrect date format or no date was selected.  Please select a date first!';
@@ -152,6 +167,7 @@ JS
                 alert(userInputDate);document.getElementById
                 ('submitButton').style.visibility = 'visible'; document.getElementById('HolidayBooking_status').value = 'ACCEPTED';
             } else {
+                alert(alertMessageNull);
                 document.getElementById
                 ('submitButton').style.visibility = 'hidden'; document.getElementById('HolidayBooking_status').value = 'NOT ACCEPTED';
 

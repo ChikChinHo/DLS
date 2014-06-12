@@ -6,17 +6,19 @@ $this->breadcrumbs=array(
 	'Employees',
 );
 
-/*$this->menu=array(
-	array('label'=>'Create Employee', 'url'=>array('create')),
-	array('label'=>'Manage Employee', 'url'=>array('admin')),
-);*/
+if (Yii::app()->getModule('user')->isAdmin() == true) {
+    $this->menu = array(
+        array('label' => 'Create Employee', 'url' => array('create')),
+        array('label' => 'Manage Employee', 'url' => array('admin')),
+    );
+}
 ?>
 
 <h1>Employees index.php</h1>
 <?php
 $userID = Yii::app()->user->id;
 $url = "index.php?r=employee/view&id=";
-$urlProfile = "http://localhost:8889/DLS/index.php?r=user/profile";
+$urlProfile = "index.php?r=user/profile";
 $urlNew = $url.$userID;
 echo ("<a href=$urlNew>Please click here to view your personal information.");
 echo ("<br><a href=$urlProfile>For you login account information, please click here.");

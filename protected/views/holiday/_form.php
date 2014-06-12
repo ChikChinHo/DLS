@@ -21,13 +21,13 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'Date'); ?>
-		<?php //echo $form->textField($model,'Date'); ?>
+        <?php //echo $form->textField($model,'Date'); ?>
         <?php
         $form->widget('zii.widgets.jui.CJuiDatePicker', array(
             'model'=>$model,
-            'attribute'=>'date',
-            'name'=>$model->date,    // This is how it works for me.
-            'value'=>$model->date,
+            'attribute'=>'Date',
+            'name'=>$model->Date,    // This is how it works for me.
+            'value'=>$model->Date,
             'options'=>array('dateFormat'=>'yy-mm-dd',
                 'altFormat'=>'dd-mm-yy',
                 'changeMonth'=>'true',

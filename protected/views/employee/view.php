@@ -18,19 +18,31 @@ $this->menu=array(
 
 <h1>View Employee #<?php echo $model->empID; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'empID',
-		'type',
-		'entryDate',
-		'postition',
-		'firstName',
-		'lastName',
-		'deptID',
-		'bankNo',
-		'cardNo1',
-		'cardNo2',
-		'grade',
-	),
-)); ?>
+<?php
+
+//echo Yii::app()->request->url;
+$userID = Yii::app()->user->id;
+//echo $userID;
+$isMatch = explode("view&id=", Yii::app()->request->url);
+//print_r($isMatch);
+//echo $isMatch[1];
+$isMatch = strcmp($userID, $isMatch[1]);
+
+if (1+1==2) {
+    $this->widget('zii.widgets.CDetailView', array(
+        'data' => $model,
+        'attributes' => array(
+            'empID',
+            'type',
+            'entryDate',
+            'postition',
+            'firstName',
+            'lastName',
+            'deptID',
+            'bankNo',
+            'cardNo1',
+            'cardNo2',
+            'grade',
+        ),
+    ));
+} ?>

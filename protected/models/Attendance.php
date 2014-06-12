@@ -89,17 +89,31 @@ class Attendance extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+        $leaveTime = $this->leave;
 		$criteria->compare('attdNo',$this->attdNo);
 		$criteria->compare('empID',$this->empID,true);
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('arrive',$this->arrive,true);
 		$criteria->compare('lunchOut',$this->lunchOut,true);
 		$criteria->compare('lunchIn',$this->lunchIn,true);
-		$criteria->compare('leave',$this->leave,true);
+        $criteria->order = 'attdNo DESC' ;
+        //$criteria->compare('leave',"'".$leaveTime."'", true);
+        //$criteria->addCondition(" `leave` LIKE '$leaveTime'");
 
-		return new CActiveDataProvider($this, array(
+		/*return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
-		));
+		));*/
+        //$criteria=new CDbCriteria;
+
+        if (Yii::app()->getModule('user')->isAdmin() == false) {
+            $userid = Yii::app()->user->id;
+            $criteria->addCondition("empID = $userid");
+        } else {
+            //$criteria->addCondition("empID = $userid");
+        }
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+        ));
 	}
 
 	/**

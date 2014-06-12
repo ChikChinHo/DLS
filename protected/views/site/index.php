@@ -21,7 +21,15 @@ should you have any questions.</p>
 
 
 <?php
+    $listData = CHTML::listData(Department::model()->findAll(),'deptID','deptName');
+    print_r($listData);
+    //echo $listData[1];
+    /*echo date("Y-m-d H:i:s");
     $testId = Yii::app()->user->id;
     echo "user id $testId";
+    $modelAttributes = Employee::model()->findByPk($testId);
+     print_r($modelAttributes);
+    echo " ".$modelAttributes['postition'];
+    echo $count = count($modelAttributes);*/
 ?>
 

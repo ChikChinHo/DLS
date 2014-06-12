@@ -21,43 +21,83 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'empID'); ?>
-		<?php echo $form->textField($model,'empID',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'empID'); ?>
-	</div>
+		<?php
+        //$empID = Yii::app()->user->id;
+        $result= Yii::app()->db->createCommand("SELECT * FROM `employee` ORDER By empID DESC")->queryAll();
+       // var_dump($result);
+       //echo  $sql = "SELECT * FROM `employee` ORDER By 'empID' DESC";
+       // echo $result[0]['empID'];
+        $newEmpID = $result[0]['empID'] + 1;
+        echo $form->textField($model,'empID',array('size'=>10,'maxlength'=>10, 'value'=>$newEmpID, 'readOnly'=>true,)); ?>
+        <?php $example = "Generate by system.  Not allow to change.";echo "<br/>".$example; ?>
+
+        <?php echo $form->error($model,'empID'); ?>
+	</div><br>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'type'); ?>
-		<?php echo $form->textField($model,'type',array('size'=>2,'maxlength'=>2)); ?>
-		<?php echo $form->error($model,'type'); ?>
-	</div>
+		<?php
+        $jobType = array('FT'=>'FT', 'PT'=>'PT');
+        echo $form->radioButtonList($model,'type',$jobType,array('separator'=>' '));
+        //echo $form->textField($model,'type',array('size'=>2,'maxlength'=>2));
+        ?>
+        <?php $example = "example: PT / FT";echo "<br/>".$example; ?>
+        <?php echo $form->error($model,'type'); ?>
+	</div><br/>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'entryDate'); ?>
-		<?php echo $form->textField($model,'entryDate'); ?>
-		<?php echo $form->error($model,'entryDate'); ?>
-	</div>
+        <?php
+        //echo $form->textField($model,'entryDate');
+        $form->widget('zii.widgets.jui.CJuiDatePicker', array(
+            'model'=>$model,
+            'attribute'=>'entryDate',
+            'name'=>$model->entryDate,    // This is how it works for me.
+            'value'=>$model->entryDate,
+            'options'=>array('dateFormat'=>'yy-mm-dd',
+                'altFormat'=>'dd-mm-yy',
+                'changeMonth'=>'true',
+                'changeYear'=>'true',
+                //'yearRange'=>'1920:2010',
+                'showOn'=>'both',
+                'buttonText'=>'...'),
+            'htmlOptions'=>array('size'=>'10'
+            )
+        ));
+        ?>
+        <?php $example = "example: 2014-12-31";echo "<br/>".$example; ?>
+
+        <?php echo $form->error($model,'entryDate'); ?>
+	</div><br/>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'postition'); ?>
 		<?php echo $form->textField($model,'postition',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'postition'); ?>
-	</div>
+        <?php $example = "example: Manager/Supervisor";echo "<br/>".$example; ?>
+        <?php echo $form->error($model,'postition'); ?>
+	</div><br>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'firstName'); ?>
 		<?php echo $form->textField($model,'firstName',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'firstName'); ?>
-	</div>
+        <?php $example = "example: Tai Man";echo "<br/>".$example; ?>
+        <?php echo $form->error($model,'firstName'); ?>
+	</div><br>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'lastName'); ?>
 		<?php echo $form->textField($model,'lastName',array('size'=>20,'maxlength'=>20)); ?>
-		<?php echo $form->error($model,'lastName'); ?>
-	</div>
+        <?php $example = "example: Chan";echo "<br/>".$example; ?>
+        <?php echo $form->error($model,'lastName'); ?>
+	</div><br>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'deptID'); ?>
-		<?php echo $form->textField($model,'deptID',array('size'=>10,'maxlength'=>10)); ?>
+		<?php
+        $listData = CHTML::listData(Department::model()->findAll(),'deptID','deptName');
+        echo $form->dropDownList($model,'deptID',$listData);
+        //echo $form->textField($model,'deptID',array('size'=>10,'maxlength'=>10));
+        ?>
 		<?php echo $form->error($model,'deptID'); ?>
 	</div>
 
@@ -81,12 +121,20 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'grade'); ?>
-		<?php echo $form->textField($model,'grade',array('size'=>2,'maxlength'=>2)); ?>
+		<?php
+        $listData = CHTML::listData(Salary::model()->findAll(),'grade','value');
+        echo $form->dropDownList($model,'grade',$listData);
+
+        //echo $form->textField($model,'grade',array('size'=>2,'maxlength'=>2));
+        ?>
 		<?php echo $form->error($model,'grade'); ?>
 	</div>
 
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+		<?php
+        echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
+        //$result= Yii::app()->db->createCommand("INSERT INTO `logging5`.`testTable` (`TestPK`, `TestName`) VALUES ('2', 'name1');")->queryAll();
+        ?>
 	</div>
 
 <?php $this->endWidget(); ?>

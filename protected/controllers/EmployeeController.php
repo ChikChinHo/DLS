@@ -63,21 +63,44 @@ class EmployeeController extends Controller
 	public function actionCreate()
 	{
 		$model=new Employee;
+        //$model2=new testTable;
+        $model3=new Users;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Employee']))
 		{
-			$model->attributes=$_POST['Employee'];
-			if($model->save())
+
+            $model->attributes=$_POST['Employee'];
+            if($model->save())
+
+                $employee = Employee::model()->findByAttributes(array('empID'=>$model->empID));
+
+               // $model2->TestPK = 3;
+                //$model2->TestName  = $employee->lastName;
+                //$model2->save();
+
+                $model3->id = $employee->empID;
+                $model3->username = $employee->firstName.$employee->lastName;
+                $model3->password = md5("12345678");
+                $model3->email = $employee->firstName.$employee->lastName."@email.com";
+                $model3->activkey = "password";
+                $model3->create_at = $employee->entryDate;
+                $model3->lastvisit_at = $employee->entryDate;
+                $model3->superuser = 0;
+                $model3->status = 1;
+                $model3->save();
+
 				$this->redirect(array('view','id'=>$model->empID));
-		}
+
+        }
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
-	}
+
+    }
 
 	/**
 	 * Updates a particular model.
@@ -175,3 +198,5 @@ class EmployeeController extends Controller
 		}
 	}
 }
+
+

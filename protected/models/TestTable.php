@@ -1,20 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "salary".
+ * This is the model class for table "testTable".
  *
- * The followings are the available columns in table 'salary':
- * @property string $grade
- * @property integer $value
+ * The followings are the available columns in table 'testTable':
+ * @property integer $TestPK
+ * @property string $TestName
  */
-class Salary extends CActiveRecord
+class TestTable extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'salary';
+		return 'testTable';
 	}
 
 	/**
@@ -25,12 +25,12 @@ class Salary extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('grade, value', 'required'),
-			array('value', 'numerical', 'integerOnly'=>true),
-			array('grade', 'length', 'max'=>2),
+			array('TestPK, TestName', 'required'),
+			array('TestPK', 'numerical', 'integerOnly'=>true),
+			array('TestName', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('grade, value', 'safe', 'on'=>'search'),
+			array('TestPK, TestName', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -51,8 +51,8 @@ class Salary extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'grade' => 'Grade',
-			'value' => 'Value',
+			'TestPK' => 'Test Pk',
+			'TestName' => 'Test Name',
 		);
 	}
 
@@ -74,33 +74,19 @@ class Salary extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('grade',$this->grade,true);
-		$criteria->compare('value',$this->value);
+		$criteria->compare('TestPK',$this->TestPK);
+		$criteria->compare('TestName',$this->TestName,true);
 
-		/*return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,*/
-        //$criteria=new CDbCriteria;
-
-        if (Yii::app()->getModule('user')->isAdmin() == false) {
-            //$userid = Yii::app()->user->id;
-            //$criteria->addCondition("userid = $userid");
-            $testId = Yii::app()->user->id;
-            $modelAttributes = Employee::model()->findByPk($testId);
-            $grade = "'".$modelAttributes['grade']."'";
-            $criteria->addCondition("grade = $grade");
-        }
-        return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
 		));
-
-
 	}
 
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Salary the static model class
+	 * @return TestTable the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
